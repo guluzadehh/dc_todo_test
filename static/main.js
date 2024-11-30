@@ -76,7 +76,7 @@ $(document).ready(function () {
       });
     })
 
-    let items = [];
+    let items = {};
 
     $("#status-input").on("click", function() {
       let data = {
@@ -161,19 +161,22 @@ $(document).ready(function () {
     });
 
     $("#date-sort").on("click", function() {
-      updateItems(items.sort((a, b) => new Date(a.date) < new Date(b.date)));
+      updateItems(Object.values(items).sort((a, b) => new Date(a.date) < new Date(b.date)));
       $("#date-sort").addClass("hide");
       $("#name-sort").removeClass("hide");
     });
 
     $("#name-sort").on("click", function() {
-      updateItems(items.sort((a, b) => a.name > b.name));
+      updateItems(Object.values(items).sort((a, b) => a.name > b.name));
       $("#name-sort").addClass("hide");
       $("#date-sort").removeClass("hide");
     });
 
     function updateItems(newItems) {
-     items = newItems;
+      items = {}
+      for (let item of newItems) {
+        items[item.id] = item
+      }
      renderItems(items);
     }
 
@@ -182,7 +185,7 @@ $(document).ready(function () {
 
       list.empty();
 
-      for (let item of items) {
+      for (let item of Object.values(items)) {
         list.append(
           `<div class="content__item">
               <div class="content__item-left">
