@@ -54,6 +54,14 @@ $(document).ready(function () {
         year: "numeric",
     }));
 
+    $.ajax({
+        type: "GET",
+        url: "/api/todos",
+        contentType: "application/json",
+        dataType: "json",
+        success: (res) => updateItems(res)
+    });
+
 
     function updateItems(items) {
       const list = $(".content__list");
