@@ -117,9 +117,15 @@ $(document).ready(function () {
         }
       });
     });
+
+    $("#week-filter").on("click", function() {
+      let from = new Date();
+      let to = new Date();
+      to.setDate(to.getDate() + 7) 
+
       const data = {
-        from: new Date().getTime(),
-        to: new Date().getTime(),
+        from: from.getTime(),
+        to: to.getTime(),
       };
 
       $.ajax({
@@ -129,8 +135,8 @@ $(document).ready(function () {
         dataType: "json",
         success: function (res) {
           updateItems(res);
-          $("#date-from").datepicker("setDate", data.from);
-          $("#date-to").datepicker("setDate", data.to);
+          $("#date-from").datepicker("setDate", from);
+          $("#date-to").datepicker("setDate", to);
         }
       });
     });
