@@ -84,6 +84,8 @@ $(document).ready(function () {
         to: new Date($("#date-to").val()).getTime(),
       }
 
+      if (data.from == NaN || data.to == NaN) return;
+
       if (this.checked) {
         data.status = false
       }
@@ -138,6 +140,23 @@ $(document).ready(function () {
           $("#date-from").datepicker("setDate", from);
           $("#date-to").datepicker("setDate", to);
         }
+      });
+    });
+
+    $("#date-range-filter").on("click", function() {
+      const data = {
+        from: new Date($("#date-from").val()).getTime(),
+        to: new Date($("#date-to").val()).getTime(),
+      }
+
+      if (data.from == NaN || data.to == NaN) return;
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/date",
+        data: data,
+        dataType: "json",
+        success: (res) => updateItems(res)
       });
     });
 
