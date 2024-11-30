@@ -54,4 +54,29 @@ $(document).ready(function () {
         year: "numeric",
     }));
 
+
+    function updateItems(items) {
+      const list = $(".content__list");
+
+      list.empty();
+
+      for (let item of items) {
+        list.append(
+          `<div class="content__item">
+              <div class="content__item-left">
+                  <h4 class="content__item-name">${item.name}</h4>
+                  <p class="content__item-desc">${item.shortDesc}</p>
+              </div>
+              <div class="content__item-right">
+                  <span class="content__item-status">${item.status ? "Выполнено" : "Не выполнено"}</span>
+                  <span class="content__item-date">${new Date(item.date).toLocaleDateString("ru", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                })}</span>
+              </div>
+          </div>`
+        );
+      }
+    }
 });
