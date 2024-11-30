@@ -7,14 +7,16 @@ $(document).ready(function () {
             duration: 1000
           },
           hide: {
-            effect: "explode",
-            duration: 1000
+            effect: "blind",
+            duration: 1000,
+          },
+          close: function() {
+            $(this).$(".dialog__name").empty();
+            $(this).$(".dialog__desc").empty();
+            $(this).$(".dialog__date").empty();
+            $(this).$(".dialog__status").empty();
           }
         });
-     
-        // $( "#opener" ).on( "click", function() {
-        //   $( "#dialog" ).dialog( "open" );
-        // });
     });
 
     $( function() {
@@ -116,6 +118,7 @@ $(document).ready(function () {
           updateItems(res);
           $("#date-from").datepicker("setDate", now);
           $("#date-to").datepicker("setDate", now);
+          $("#status-input").prop("checked", false);
         }
       });
     });
@@ -139,6 +142,7 @@ $(document).ready(function () {
           updateItems(res);
           $("#date-from").datepicker("setDate", from);
           $("#date-to").datepicker("setDate", to);
+          $("#status-input").prop("checked", false);
         }
       });
     });
@@ -172,12 +176,27 @@ $(document).ready(function () {
       $("#date-sort").removeClass("hide");
     });
 
+    $(".content__list").on("click", ".content__item-name", function() {
+      const itemId = $(this).data("item-id");
+      const item = items[itemId];
+
+      $("#dialog").dialog("open");
+      $(".dialog__name").text(item.name);
+      $(".dialog__desc").text(item.fullDesc);
+      $(".dialog__date").text(new Date(item.date).toLocaleDateString("ru", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+      }));
+      $(".dialog__status").text(item.status ? "Выполнено" : "Не выполнено");
+    });
+
     function updateItems(newItems) {
       items = {}
       for (let item of newItems) {
         items[item.id] = item
       }
-     renderItems(items);
+      renderItems(items);
     }
 
     function renderItems(items) {
@@ -189,7 +208,7 @@ $(document).ready(function () {
         list.append(
           `<div class="content__item">
               <div class="content__item-left">
-                  <h4 class="content__item-name">${item.name}</h4>
+                  <h4 class="content__item-name" data-item-id="${item.id}">${item.name}</h4>
                   <p class="content__item-desc">${item.shortDesc}</p>
               </div>
               <div class="content__item-right">
