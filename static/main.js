@@ -84,11 +84,9 @@ $(document).ready(function () {
         to: new Date($("#date-to").val()).getTime(),
       }
 
-      
       if (this.checked) {
         data.status = false
       }
-      console.log(data)
 
       $.ajax({
         type: "GET",
@@ -96,6 +94,25 @@ $(document).ready(function () {
         data: data,
         dataType: "json",
         success: (res) => updateItems(res)
+      });
+    });
+
+    $("#today-filter").on("click", function() {
+      const data = {
+        from: new Date().getTime(),
+        to: new Date().getTime(),
+      };
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/date",
+        data: data,
+        dataType: "json",
+        success: function (res) {
+          updateItems(res);
+          $("#date-from").datepicker("setDate", data.from);
+          $("#date-to").datepicker("setDate", data.to);
+        }
       });
     });
 
