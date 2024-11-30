@@ -20,6 +20,29 @@ header {
     background-color: gray;
 }
 
+.header__search {
+    position: relative;
+}
+
+.dropdown-items {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #111;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: lightgray;
+    z-index: 100;
+}
+
+.dropdown-item-name {
+    margin-bottom: .3rem;
+    cursor: pointer;
+}
+
 .header__container {
     display: flex;
     justify-content: space-between;

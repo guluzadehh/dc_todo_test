@@ -11,10 +11,10 @@ $(document).ready(function () {
             duration: 1000,
           },
           close: function() {
-            $(this).$(".dialog__name").empty();
-            $(this).$(".dialog__desc").empty();
-            $(this).$(".dialog__date").empty();
-            $(this).$(".dialog__status").empty();
+            $(".dialog__name").empty();
+            $(".dialog__desc").empty();
+            $(".dialog__date").empty();
+            $(".dialog__status").empty();
           }
         });
     });
@@ -79,6 +79,7 @@ $(document).ready(function () {
     })
 
     let items = {};
+    let droppedItems = {};
 
     $("#status-input").on("click", function() {
       let data = {
@@ -180,16 +181,34 @@ $(document).ready(function () {
       const itemId = $(this).data("item-id");
       const item = items[itemId];
 
-      $("#dialog").dialog("open");
-      $(".dialog__name").text(item.name);
-      $(".dialog__desc").text(item.fullDesc);
-      $(".dialog__date").text(new Date(item.date).toLocaleDateString("ru", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-      }));
-      $(".dialog__status").text(item.status ? "Выполнено" : "Не выполнено");
+      renderDialog(item);
     });
+
+    $("#todo-search").on("input", function() {
+      const q = $(this).val();
+
+      if (!q) return;
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/find",
+        data: {
+          q: q
+        },
+        dataType: "json",
+        success: (res) => updateDroppedItems(res)
+      });
+    });
+
+    $(".dropdown-items").on("click", ".dropdown-item-name", function() {
+      renderDialog(droppedItems[$(this).data("item-id")])
+    });
+
+    $(document).on("click", function (e) {
+      if (!$(e.target).closest("#header__search").length) {
+          $(".dropdown-items").hide();
+      }
+  });
 
     function updateItems(newItems) {
       items = {}
@@ -197,6 +216,14 @@ $(document).ready(function () {
         items[item.id] = item
       }
       renderItems(items);
+    }
+
+    function updateDroppedItems(newItems) {
+      droppedItems = {}
+      for (let item of newItems) {
+        droppedItems[item.id] = item
+      }
+      renderDroppedItems(droppedItems);
     }
 
     function renderItems(items) {
@@ -222,5 +249,30 @@ $(document).ready(function () {
           </div>`
         );
       }
+    }
+
+    function renderDroppedItems(items) {
+      let dropdown = $(".dropdown-items");
+      dropdown.empty();
+
+      dropdown.show();
+
+      for (let item of Object.values(items)) {
+        dropdown.append(
+          `<div class="dropdown-item-name" data-item-id="${item.id}">${item.name}</div>`
+        );
+      }
+    }
+
+    function renderDialog(item) {
+      $("#dialog").dialog("open");
+      $(".dialog__name").text(item.name);
+      $(".dialog__desc").text(item.fullDesc);
+      $(".dialog__date").text(new Date(item.date).toLocaleDateString("ru", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+      }));
+      $(".dialog__status").text(item.status ? "Выполнено" : "Не выполнено");
     }
 });
