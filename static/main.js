@@ -76,6 +76,8 @@ $(document).ready(function () {
       });
     })
 
+    let items = [];
+
     $("#status-input").on("click", function() {
       const data = {
         from: new Date($("#date-from").val()).getTime(),
@@ -97,7 +99,12 @@ $(document).ready(function () {
       });
     });
 
-    function updateItems(items) {
+    function updateItems(newItems) {
+     items = newItems;
+     renderItems(items);
+    }
+
+    function renderItems(items) {
       const list = $(".content__list");
 
       list.empty();
