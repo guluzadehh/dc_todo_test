@@ -160,6 +160,18 @@ $(document).ready(function () {
       });
     });
 
+    $("#date-sort").on("click", function() {
+      updateItems(items.sort((a, b) => new Date(a.date) < new Date(b.date)));
+      $("#date-sort").addClass("hide");
+      $("#name-sort").removeClass("hide");
+    });
+
+    $("#name-sort").on("click", function() {
+      updateItems(items.sort((a, b) => a.name > b.name));
+      $("#name-sort").addClass("hide");
+      $("#date-sort").removeClass("hide");
+    });
+
     function updateItems(newItems) {
      items = newItems;
      renderItems(items);
