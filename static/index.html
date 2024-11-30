@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Todo List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    <div id="dialog" title="Basic dialog">
+        <div class="dialog__meta">
+            <span class="dialog__date"></span>
+            <span class="dialog__status"></span>
+        </div>
+        <p class="dialog__desc"></p>
+    </div>
+
+    <header>
+        <div class="header__container container">
+           <div class="header__search">
+                <input type="text" name="todo-search" id="todo-search" placeholder="Поиск" />
+                <button type="button" class="header__search-btn">Найти</button>
+           </div> 
+           <div class="header__profile">
+                <a class="header__username" href="#">Username</a>
+           </div>
+        </div>
+    </header>
+    <main>
+        <div class="main__container">
+            <div class="filters">
+                <div class="container">
+                    <div class="filters__item filters__buttons">
+                        <button type="button" class="filter-btn">Сегодня</button>
+                        <button type="button" class="filter-btn">На неделю</button>
+                    </div>
+                    <div class="filters__item filters__date">
+                        <div>
+                            <label for="from">От</label>
+                            <input type="text" id="date-from" name="from">
+                        </div>
+                        <div>
+                            <label for="to">До</label>
+                            <input type="text" id="date-to" name="to">
+                        </div>
+                    </div>
+                    <div class="filters__item filters__status">
+                        <input type="checkbox" name="not-completed" id="status-input" />
+                        <label for="status-input">Только невыполнимые</label>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <div class="content__header">
+                        <div class="content__today"></div>
+                        <div class="content__sort">
+                            <button type="button" class="content__sort-btn">Сортировать по дате</button>
+                            <button type="button" class="content__sort-btn hide">Сортировать по имени</button>
+                        </div>
+                    </div>
+                    <div class="content__list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

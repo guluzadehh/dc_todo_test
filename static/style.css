@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, main, .main__container {
+    min-height: 100%;
+}
+
+.container {
+    padding: 1rem;
+}
+
+.hide {
+    display: none;
+}
+
+header {
+    background-color: gray;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__search input, .header__search button {
+    padding: .3rem;
+}
+
+.header__search button {
+}
+
+.main__container {
+    display: flex;
+    flex-direction: row;
+}
+
+.filters {
+    flex: 30%;
+    background-color: white;
+}
+
+.filters > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.filters__buttons button {
+    width: 60%;
+    padding: .3rem;
+    margin-bottom: .7rem;
+}
+
+.filters__item {
+    margin-bottom: .8rem;
+}
+
+.content {
+    flex: 70%;
+    background-color: #efefef;
+}
+
+.content__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: .8em;
+}
+
+.content__sort-btn {
+    border: none;
+    box-shadow: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.content__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: gray;
+}
+
+.content__item-name {
+    margin-bottom: 1rem;
+}
+
+.content__item-date {
+    margin-top: .4rem;
+    font-size: 0.8em;
+}
+
+.content__item-status, .content__item-date {
+    display: block;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    backdrop-filter: blur(15px);
+    opacity: .4;
+}
