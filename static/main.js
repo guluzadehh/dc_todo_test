@@ -62,6 +62,19 @@ $(document).ready(function () {
         success: (res) => updateItems(res)
     });
 
+    $(".header__search-btn").on("click", function() {
+      const q = $("#todo-search").val();
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/find",
+        data: {
+          q: q
+        },
+        dataType: "json",
+        success: (res) => updateItems(res)
+      });
+    })
 
     function updateItems(items) {
       const list = $(".content__list");
