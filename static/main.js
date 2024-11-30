@@ -76,6 +76,27 @@ $(document).ready(function () {
       });
     })
 
+    $("#status-input").on("click", function() {
+      const data = {
+        from: new Date($("#date-from").val()).getTime(),
+        to: new Date($("#date-to").val()).getTime(),
+      }
+
+      
+      if (this.checked) {
+        data.status = false
+      }
+      console.log(data)
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/date",
+        data: data,
+        dataType: "json",
+        success: (res) => updateItems(res)
+      });
+    });
+
     function updateItems(items) {
       const list = $(".content__list");
 
