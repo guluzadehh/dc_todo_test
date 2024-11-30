@@ -79,7 +79,7 @@ $(document).ready(function () {
     let items = [];
 
     $("#status-input").on("click", function() {
-      const data = {
+      let data = {
         from: new Date($("#date-from").val()).getTime(),
         to: new Date($("#date-to").val()).getTime(),
       }
@@ -98,6 +98,25 @@ $(document).ready(function () {
     });
 
     $("#today-filter").on("click", function() {
+      const now = new Date();
+
+      const data = {
+        from: now.getTime(),
+        to: now.getTime(),
+      };
+
+      $.ajax({
+        type: "GET",
+        url: "/api/todos/date",
+        data: data,
+        dataType: "json",
+        success: function (res) {
+          updateItems(res);
+          $("#date-from").datepicker("setDate", now);
+          $("#date-to").datepicker("setDate", now);
+        }
+      });
+    });
       const data = {
         from: new Date().getTime(),
         to: new Date().getTime(),
